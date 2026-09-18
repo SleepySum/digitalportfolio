@@ -1,101 +1,45 @@
-# SUMIT BHOI — Digital Portfolio
+# Sumit Bhoi — Portfolio
 
-> Creative Software Engineer · ML Developer · Interactive Systems Designer
+My personal portfolio site: https://sumit-bhoi-portfolio.vercel.app
 
-**🔗 Live Site:** [sumit-bhoi-portfolio.vercel.app](https://sumit-bhoi-portfolio.vercel.app)
+It's a single static page. Plain HTML, Tailwind from the CDN, and vanilla JS all in one file, so there's no build step.
 
----
+## What's in it
 
-## 👋 About
+- Scroll-driven zoom effect on the hero
+- Custom cursor with trailing physics (desktop only — touch devices get the normal cursor)
+- Canvas animations inside each project card
+- Ambient background sound synthesized with the Web Audio API, no audio files
+- Contact form handled by FormSubmit. Email field only accepts @gmail.com addresses, checked both by HTML validation and in the submit handler before anything is sent
 
-I'm **Sumit Dnyaneshwar Bhoi**, a Computer Engineering & Computer Science + Design student at KKWIEER, Nashik. I take ideas from their underlying algorithm to a fluid, pixel-perfect user interface — my practice lives at the intersection of web engineering, interactive physics simulations, machine learning prediction models, and visual detail.
+## Projects
 
-This repository contains the source code for my personal portfolio — a single-page, dark-themed, interactive experience featuring:
+| Project | What it is | Links |
+|---|---|---|
+| LaLiga Player Value Predictor | ML web app that predicts 2024-25 La Liga player market values from season performance data | [app](https://laliga-player-value-estimator.vercel.app), [code](https://github.com/SleepySum/LaLiga_Player_Prediction) |
+| PhysX | Multi-body planetary gravity simulation with real-time orbital mechanics | [app](https://physx.vercel.app), [code](https://github.com/SleepySum/PhysX) |
+| Takrar | Platform concept for turning complaints and feedback into structured resolutions | architecture only |
+| Gravity Well | Canvas particle system driven by radial attraction and velocity damping | [app](https://gravity-well-sooty.vercel.app), [code](https://github.com/SleepySum/Gravity-Well) |
 
-- 🎯 **Custom trailing cursor physics** with lerp-smoothed dot + ring
-- 🌀 **Scroll-driven zoom parallax** hero section
-- 🎨 **Live canvas simulations** embedded in each project card (tactical pitch, orbital mechanics, signal waves, gravity vortex)
-- 🎧 **Web Audio API ambient synthesizer** — a generative chord drone, no audio files
-- 🧲 **3D tilt + mouse spotlight** project cards
-- 📬 **Contact form with Gmail-only validation** — junk domains are rejected in-browser before anything is sent
-- ⚡ Zero build step — plain HTML + Tailwind CDN + vanilla JS
+## Running locally
 
----
-
-## 🚀 Featured Projects
-
-| # | Project | Description | Links |
-|---|---------|-------------|-------|
-| 01 | **LaLiga Player Value Predictor** | ML web app predicting 2024–25 La Liga player market values from full-season tactical performance metrics | [Live](https://laliga-player-value-estimator.vercel.app) · [Code](https://github.com/SleepySum/LaLiga_Player_Prediction) |
-| 02 | **PHYSX** | Multi-body planetary gravity simulation rendering real-time orbital mechanics, velocity vectors & mass attraction | [Live](https://physx.vercel.app) · [Code](https://github.com/SleepySum/PhysX) |
-| 03 | **Takrar** | Systemic action platform turning user complaints and community feedback into structured resolutions | Concept / Architecture |
-| 04 | **Gravity Well** | Canvas particle system study driven by radial attraction forces, velocity dampening & generative rhythm | [Live](https://gravity-well-sooty.vercel.app) · [Code](https://github.com/SleepySum/Gravity-Well) |
-
----
-
-## 🛠 Tech Stack
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![Canvas API](https://img.shields.io/badge/Canvas_API-000000?style=flat-square&logo=googlechrome&logoColor=white)
-![Web Audio API](https://img.shields.io/badge/Web_Audio-FF0000?style=flat-square&logo=googlechrome&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
-
-**Core skills:** Python · C++ · Java · Data Structures & Algorithms · React · Next.js · Node.js · MERN · Predictive Modeling · Android
-
----
-
-## 📂 Project Structure
+Open `index.html` in a browser, or serve the folder:
 
 ```
-digitalportfolio/
-├── index.html      # The entire site — markup, styles & scripts
-├── vercel.json     # Static deployment config
-└── README.md
-```
-
----
-
-## ⚙️ Run Locally
-
-No dependencies, no build step. Either:
-
-```bash
-# Option 1 — just open it
-start index.html        # Windows
-open index.html         # macOS
-
-# Option 2 — serve it (recommended, matches production)
 npx serve .
 ```
 
-Or run a local Vercel dev server:
+## Deploying
 
-```bash
-npx vercel dev
+Hosted on Vercel as a static site:
+
 ```
-
----
-
-## ☁️ Deployment
-
-Hosted on **Vercel** as a static deployment.
-
-```bash
 npx vercel --prod
 ```
 
----
+## Contact
 
-## 📬 Contact
-
-[![GitHub](https://img.shields.io/badge/GitHub-SleepySum-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/SleepySum)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sumit_Bhoi-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sumit-bhoi-b15a43330)
-[![Email](https://img.shields.io/badge/Email-bhoisumit322s@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:bhoisumit322s@gmail.com)
-[![Phone](https://img.shields.io/badge/Phone-%2B91_88558_11810-25D366?style=flat-square&logo=whatsapp&logoColor=white)](tel:+918855811810)
-
----
-
-<p align="center">© 2026 Sumit Bhoi — All Rights Reserved</p>
+- Email: bhoisumit322s@gmail.com
+- GitHub: https://github.com/SleepySum
+- LinkedIn: https://www.linkedin.com/in/sumit-bhoi-b15a43330
+- Phone: +91 88558 11810
