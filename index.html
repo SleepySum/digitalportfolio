@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of Sumit Dnyaneshwar Bhoi — Creative Software Engineer, ML Developer & Interactive Systems Designer." />
+    <title>SUMIT BHOI — Creative Software Engineer & Systems Architect</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      :root {
+        --bg: #030303;
+        --card-bg: #09090b;
+        --border: rgba(255, 255, 255, 0.1);
+        --border-hover: rgba(255, 255, 255, 0.35);
+        --grid-line: rgba(255, 255, 255, 0.035);
+        --text-main: #ffffff;
+        --text-muted: #888888;
+        --font-display: 'Syne', -apple-system, sans-serif;
+        --font-body: 'Inter', -apple-system, sans-serif;
+        --font-mono: 'DM Mono', monospace;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        background-color: var(--bg);
+        color: var(--text-main);
+        font-family: var(--font-body);
+        overflow-x: hidden;
+        overflow-y: scroll;
+        cursor: none; /* Hide default cursor on desktop */
+      }
+
+      a, button, input, textarea, [role="button"] {
+        cursor: none;
+      }
+
+      /* Background Grid Pattern */
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        background-image: 
+          linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+        background-size: 8.333vw 8.333vw;
+      }
+
+      .cursor-dot {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: difference;
+        transition: transform 0.15s ease, opacity 0.2s ease;
+      }
+
+      .cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 44px;
+        height: 44px;
+        border: 1.5px solid rgba(255, 255, 255, 0.85);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: difference;
+        will-change: transform;
+        transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                    height 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                    background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.3s ease;
+      }
+
+      /* Hover States for Custom Cursor */
+      body.cursor-hover .cursor-ring {
+        width: 72px;
+        height: 72px;
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: #ffffff;
+      }
+
+      body.cursor-hover .cursor-dot {
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+
+      body.cursor-hover-solid .cursor-ring {
+        width: 90px;
+        height: 90px;
+        background-color: #ffffff;
+        border-color: #ffffff;
+      }
+
+      body.cursor-hover-solid .cursor-dot {
+        opacity: 0;
+      }
+
+      /* Touch Fallback */
+      @media (hover: none) and (pointer: coarse) {
+        html, body, a, button, input, textarea {
+          cursor: auto !important;
+        }
+        .cursor-dot, .cursor-ring {
+          display: none !important;
+        }
+      }
+
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1.5rem 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 100;
+        border-bottom: 1px solid var(--border);
+        background: rgba(3, 3, 3, 0.85);
+        backdrop-filter: blur(16px);
+      }
+
+      .audio-btn {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 9999px;
+        color: var(--text-main);
+        padding: 0.55rem 1.1rem;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .audio-btn:hover {
+        background: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
+      }
+
+      .audio-bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 12px;
+      }
+
+      .audio-bars span {
+        width: 2px;
+        height: 3px;
+        background: currentColor;
+        transition: height 0.2s ease;
+      }
+
+      .audio-btn.playing .audio-bars span:nth-child(1) { animation: barPulse 0.8s infinite alternate ease-in-out; }
+      .audio-btn.playing .audio-bars span:nth-child(2) { animation: barPulse 1.2s infinite alternate ease-in-out 0.2s; }
+      .audio-btn.playing .audio-bars span:nth-child(3) { animation: barPulse 0.6s infinite alternate ease-in-out 0.4s; }
+      .audio-btn.playing .audio-bars span:nth-child(4) { animation: barPulse 1.0s infinite alternate ease-in-out 0.1s; }
+
+      @keyframes barPulse {
+        0% { height: 2px; }
+        100% { height: 12px; }
+      }
+
+      .hero-section {
+        position: relative;
+        height: 150vh;
+        z-index: 10;
+      }
+
+      .sticky-hero-viewport {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 5rem 2.5rem 3rem 2.5rem;
+        overflow-x: hidden;
+      }
+
+      .zoom-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        padding: 0 1rem;
+        transform-origin: 50% 45%;
+        will-change: transform, opacity;
+        transition: transform 0.05s linear, opacity 0.05s linear;
+      }
+
+      .colossal-title {
+        font-family: var(--font-display);
+        font-size: clamp(5rem, 14vw, 15rem);
+        font-weight: 900;
+        line-height: 0.85;
+        letter-spacing: -0.03em;
+        text-transform: uppercase;
+        user-select: none;
+        margin-top: 1rem;
+      }
+
+      .title-row {
+        display: block;
+        width: 100%;
+      }
+
+      .hero-footer-bar {
+        display: grid;
+        grid-template-columns: 1fr 2.2fr 1fr;
+        align-items: flex-end;
+        gap: 2rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1.8rem;
+      }
+
+      .circle-btn {
+        width: 130px;
+        height: 130px;
+        background: #ffffff;
+        color: #000000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: 0.05em;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+      }
+
+      .circle-btn:hover {
+        transform: scale(1.12) rotate(6deg);
+      }
+
+      .main-content {
+        position: relative;
+        z-index: 20;
+        background: var(--bg);
+        padding: 6rem 2.5rem 8rem 2.5rem;
+      }
+
+      .section-block {
+        max-width: 1400px;
+        margin: 0 auto 12rem auto;
+      }
+
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 1.2rem;
+        margin-bottom: 4rem;
+        letter-spacing: 0.1em;
+      }
+
+      /* Advanced Aesthetic Project Card Styling */
+      .project-card-container {
+        perspective: 1000px;
+      }
+
+      .project-card {
+        position: relative;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s, box-shadow 0.5s;
+        transform-style: preserve-3d;
+      }
+
+      .project-card:hover {
+        border-color: var(--border-hover);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.05);
+      }
+
+      /* Radial Mouse Spotlight Overlay */
+      .card-spotlight {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 5;
+        background: radial-gradient(
+          600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(255, 255, 255, 0.08),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .project-card:hover .card-spotlight {
+        opacity: 1;
+      }
+
+      .card-banner {
+        position: relative;
+        height: 340px;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 2rem;
+      }
+
+      /* Canvas Backgrounds Inside Cards */
+      .card-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.85;
+        transition: opacity 0.4s ease;
+      }
+
+      .project-card:hover .card-canvas {
+        opacity: 1;
+      }
+
+      /* Scanline visual overlay */
+      .scanlines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 3;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+        background-size: 100% 4px;
+        opacity: 0.6;
+      }
+
+      .card-content {
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Glassmorphic Tags */
+      .glass-tag {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+        padding: 0.35rem 0.75rem;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        color: #ffffff;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1024px) {
+        .hero-footer-bar {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .site-header {
+          padding: 1.2rem 1.5rem;
+        }
+        .sticky-hero-viewport {
+          padding: 6rem 1.5rem 2rem 1.5rem;
+        }
+        .main-content {
+          padding: 4rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="relative min-h-screen">
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <div class="flex items-center gap-3">
+        <a href="#hero" class="font-mono text-xs tracking-widest text-white font-semibold hover-target">SUMIT BHOI —</a>
+        <span class="font-mono text-xs tracking-wider text-neutral-500 hidden sm:inline">SOFTWARE &amp; SYSTEMS CREATIVE</span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 font-mono text-xs tracking-widest text-neutral-300">
+        <a href="#about" class="hover:text-white transition-colors hover-target">01 / ABOUT</a>
+        <a href="#work" class="hover:text-white transition-colors hover-target">02 / WORK</a>
+        <a href="#capabilities" class="hover:text-white transition-colors hover-target">03 / PRACTICE</a>
+        <a href="#contact" class="hover:text-white transition-colors hover-target">04 / INQUIRIES</a>
+      </nav>
+
+      <!-- Audio BGM Controls -->
+      <button id="audio-toggle" class="audio-btn hover-target-solid" type="button" aria-label="Toggle background ambient sound">
+        <div class="audio-bars" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span id="audio-status-text">SOUND OFF</span>
+      </button>
+    </header>
+
+    <section class="hero-section" id="hero">
+      <div class="sticky-hero-viewport">
+        <div class="zoom-wrapper" id="zoom-target">
+          <!-- Colossal Typography Headline -->
+          <div class="colossal-title">
+            <span class="title-row">SUMIT</span>
+            <span class="title-row">BHOI</span>
+          </div>
+
+          <!-- Bottom Footer Information Grid -->
+          <div class="hero-footer-bar">
+            <div class="font-mono text-xs text-neutral-500 leading-relaxed">
+              <p>EST. 2026</p>
+              <p>NASHIK, INDIA</p>
+              <p>© ALL RIGHTS RESERVED</p>
+            </div>
+
+            <div class="text-base sm:text-xl font-medium leading-snug max-w-xl text-neutral-200">
+              I forge software systems, interactive physics simulations, and machine learning models with a precise eye for experience.
+            </div>
+
+            <div class="flex justify-end">
+              <a href="#about" class="circle-btn hover-target-solid" id="scroll-cta">
+                EXPLORE<br />WORK ↓
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="main-content" id="main-content">
+      
+      <!-- Section 01: About -->
+      <section class="section-block" id="about">
+        <div class="section-label reveal">
+          <span class="text-white">01</span>
+          <span>ABOUT / PHILOSOPHY</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
+          <h2 class="lg:col-span-7 font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight reveal">
+            I bridge the distance between <em class="italic font-normal text-neutral-400">complex logic</em> and a clear, considered experience.
+          </h2>
+          <div class="lg:col-span-5 text-neutral-300 text-base sm:text-lg leading-relaxed space-y-6 reveal">
+            <p>
+              I’m <strong>Sumit Dnyaneshwar Bhoi</strong>, a Computer Engineering and Computer Science &amp; Design student at KKWIEER, Nashik. I take ideas from their underlying algorithm to a fluid, pixel-perfect user interface.
+            </p>
+            <p>
+              My practice lives at the intersection of web engineering, interactive gravity simulations, machine learning prediction models, and visual detail.
+            </p>
+          </div>
+        </div>
+
+        <!-- Metrics Bar -->
+        <div class="grid grid-cols-1 md:grid-cols-3 border-y border-neutral-800 py-10 gap-8 reveal">
+          <div>
+            <span class="font-display text-5xl font-extrabold block text-white mb-2">04</span>
+            <p class="font-mono text-xs text-neutral-500 uppercase tracking-wider">Core Programming Languages</p>
+          </div>
+          <div>
+            <span class="font-display text-5xl font-extrabold block text-white mb-2">03+</span>
+            <p class="font-mono text-xs text-neutral-500 uppercase tracking-wider">Interactive Physics Engines Built</p>
+          </div>
+          <div>
+            <span class="font-display text-5xl font-extrabold block text-white mb-2">ML</span>
+            <p class="font-mono text-xs text-neutral-500 uppercase tracking-wider">Data-Driven Market Prediction</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block" id="work">
+        <div class="section-label reveal">
+          <span class="text-white">02</span>
+          <span>SELECTED WORK</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Project 01: LaLiga Player Value Prediction -->
+          <div class="project-card-container md:col-span-2">
+            <article class="project-card reveal hover-target">
+              <div class="card-spotlight"></div>
+              <div class="scanlines"></div>
+              <div class="card-banner">
+                <canvas id="laliga-canvas" class="card-canvas"></canvas>
+                <div class="card-content flex justify-between items-start">
+                  <span class="glass-tag">LIVE APP ↗</span>
+                  <span class="font-mono text-xs text-neutral-400">2024–25 SEASON</span>
+                </div>
+                <div class="card-content">
+                  <h3 class="font-display text-3xl sm:text-5xl font-black text-white tracking-tight">LALIGA PLAYER VALUE PREDICTOR</h3>
+                  <p class="font-mono text-xs text-emerald-400 mt-2">MACHINE LEARNING · NEXT.JS · PYTHON</p>
+                </div>
+              </div>
+              <div class="p-6 sm:p-8 flex flex-col justify-between gap-6 border-t border-neutral-800/80 bg-neutral-950/40 backdrop-blur-md">
+                <p class="text-neutral-300 text-base leading-relaxed">
+                  Machine learning web application that predicts 2024–25 La Liga player market values based on full-season tactical performance metrics and position analytics.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                  <span class="text-neutral-500">(01)</span>
+                  <div class="flex gap-6">
+                    <a href="https://laliga-player-value-estimator.vercel.app" target="_blank" rel="noreferrer" class="text-white font-semibold hover:underline hover-target flex items-center gap-1">Live App <span class="text-emerald-400">↗</span></a>
+                    <a href="https://github.com/SleepySum/LaLiga_Player_Prediction" target="_blank" rel="noreferrer" class="text-neutral-400 hover:text-white hover-target">Source Code ↗</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Project 02: PHYSX Gravity Simulation -->
+          <div class="project-card-container">
+            <article class="project-card reveal hover-target">
+              <div class="card-spotlight"></div>
+              <div class="scanlines"></div>
+              <div class="card-banner">
+                <canvas id="physx-canvas" class="card-canvas"></canvas>
+                <div class="card-content flex justify-between items-start">
+                  <span class="glass-tag">SIMULATION</span>
+                  <span class="font-mono text-xs text-cyan-400">F = G · m₁m₂ / r²</span>
+                </div>
+                <div class="card-content">
+                  <h3 class="font-display text-2xl sm:text-3xl font-black text-white">PHYSX</h3>
+                  <p class="font-mono text-xs text-neutral-400 mt-1">PLANETARY GRAVITY ENGINE</p>
+                </div>
+              </div>
+              <div class="p-6 sm:p-8 flex flex-col justify-between gap-6 border-t border-neutral-800/80 bg-neutral-950/40 backdrop-blur-md">
+                <p class="text-neutral-300 text-sm leading-relaxed">
+                  A multi-body planetary gravity simulation system rendering real-time orbital mechanics, velocity vectors, and mass attraction dynamics.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                  <span class="text-neutral-500">(02)</span>
+                  <div class="flex gap-4">
+                    <a href="https://physx.vercel.app" target="_blank" rel="noreferrer" class="text-white hover:underline hover-target">Launch <span class="text-cyan-400">↗</span></a>
+                    <a href="https://github.com/SleepySum/PhysX" target="_blank" rel="noreferrer" class="text-neutral-400 hover:text-white hover-target">Code ↗</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Project 03: Takrar Feedback Platform -->
+          <div class="project-card-container">
+            <article class="project-card reveal hover-target">
+              <div class="card-spotlight"></div>
+              <div class="scanlines"></div>
+              <div class="card-banner">
+                <canvas id="takrar-canvas" class="card-canvas"></canvas>
+                <div class="card-content flex justify-between items-start">
+                  <span class="glass-tag">CONCEPT</span>
+                  <span class="font-mono text-xs text-amber-400">SIGNAL &amp; VOICE</span>
+                </div>
+                <div class="card-content">
+                  <h3 class="font-display text-2xl sm:text-3xl font-black text-white">TAKRAR</h3>
+                  <p class="font-mono text-xs text-neutral-400 mt-1">SYSTEMIC ACTION PLATFORM</p>
+                </div>
+              </div>
+              <div class="p-6 sm:p-8 flex flex-col justify-between gap-6 border-t border-neutral-800/80 bg-neutral-950/40 backdrop-blur-md">
+                <p class="text-neutral-300 text-sm leading-relaxed">
+                  A focused digital interface platform engineered to turn user complaints and community feedback into structured, actionable resolutions.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                  <span class="text-neutral-500">(03)</span>
+                  <span class="text-neutral-400">Product Thinking &amp; Architecture</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Project 04: Gravity Well Particle System -->
+          <div class="project-card-container md:col-span-2">
+            <article class="project-card reveal hover-target">
+              <div class="card-spotlight"></div>
+              <div class="scanlines"></div>
+              <div class="card-banner">
+                <canvas id="gravity-canvas" class="card-canvas"></canvas>
+                <div class="card-content flex justify-between items-start">
+                  <span class="glass-tag">PARTICLE SYSTEM</span>
+                  <span class="font-mono text-xs text-indigo-400">CREATIVE COMPUTATION</span>
+                </div>
+                <div class="card-content">
+                  <h3 class="font-display text-3xl sm:text-4xl font-black text-white">GRAVITY WELL</h3>
+                  <p class="font-mono text-xs text-neutral-400 mt-1">SWIRLING VORTEX PHYSICS &amp; DYNAMIC VECTORS</p>
+                </div>
+              </div>
+              <div class="p-6 sm:p-8 flex flex-col justify-between gap-6 border-t border-neutral-800/80 bg-neutral-950/40 backdrop-blur-md">
+                <p class="text-neutral-300 text-base leading-relaxed">
+                  An evolving canvas particle system study driven by radial attraction forces, velocity dampening, and generative visual rhythm.
+                </p>
+                <div class="flex items-center justify-between font-mono text-xs">
+                  <span class="text-neutral-500">(04)</span>
+                  <div class="flex gap-6">
+                    <a href="https://gravity-well-sooty.vercel.app" target="_blank" rel="noreferrer" class="text-white font-semibold hover:underline hover-target">Explore Well <span class="text-indigo-400">↗</span></a>
+                    <a href="https://github.com/SleepySum/Gravity-Well" target="_blank" rel="noreferrer" class="text-neutral-400 hover:text-white hover-target">Source Code ↗</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="section-block" id="capabilities">
+        <div class="section-label reveal">
+          <span class="text-white">03</span>
+          <span>CAPABILITIES &amp; PRACTICE</span>
+        </div>
+
+        <div class="divide-y divide-neutral-800">
+          <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-4 items-center reveal hover-target">
+            <span class="md:col-span-2 font-mono text-xs text-neutral-500">01 / CORE</span>
+            <h3 class="md:col-span-4 font-display text-xl font-bold">ALGORITHMIC LOGIC</h3>
+            <p class="md:col-span-6 font-mono text-xs text-neutral-400">Python · C++ · Java · Data Structures &amp; Algorithms</p>
+          </div>
+          <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-4 items-center reveal hover-target">
+            <span class="md:col-span-2 font-mono text-xs text-neutral-500">02 / WEB</span>
+            <h3 class="md:col-span-4 font-display text-xl font-bold">FULL-STACK SYSTEMS</h3>
+            <p class="md:col-span-6 font-mono text-xs text-neutral-400">React · Next.js · Node.js · MERN Stack · UI Systems</p>
+          </div>
+          <div class="py-8 grid grid-cols-1 md:grid-cols-12 gap-4 items-center reveal hover-target">
+            <span class="md:col-span-2 font-mono text-xs text-neutral-500">03 / INTELLIGENCE</span>
+            <h3 class="md:col-span-4 font-display text-xl font-bold">MACHINE LEARNING</h3>
+            <p class="md:col-span-6 font-mono text-xs text-neutral-400">Predictive Modeling · Data Pipelines · Android Development</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block mb-0" id="contact">
+        <div class="section-label reveal">
+          <span class="text-white">04</span>
+          <span>INQUIRIES &amp; CONTACT</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div class="lg:col-span-6 reveal">
+            <h2 class="font-display text-4xl sm:text-6xl font-black leading-none mb-6">
+              Have an idea<br />worth <em class="italic font-normal text-neutral-500">building?</em>
+            </h2>
+            <p class="text-neutral-400 text-base max-w-md">
+              Available for software engineering roles, creative web projects, and technical collaborations.
+            </p>
+          </div>
+
+          <div class="lg:col-span-6 reveal">
+            <form id="contact-form" class="space-y-6" action="https://formsubmit.co/bhoisumit322s@gmail.com" method="POST">
+              <input type="hidden" name="_subject" value="New Portfolio Inquiry from Sumit Bhoi Website" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_next" value="https://sumit-bhoi-portfolio.vercel.app" />
+              <input type="hidden" name="_noscript" value="1" />
+              <div>
+                <input 
+                  type="email" 
+                  name="email" 
+                  placeholder="YOUR EMAIL ADDRESS" 
+                  required 
+                  class="w-full bg-transparent border-b border-neutral-800 py-4 text-sm font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-white transition-colors"
+                />
+              </div>
+              <div>
+                <textarea 
+                  name="message" 
+                  placeholder="TELL ME ABOUT YOUR PROJECT OR IDEA" 
+                  rows="4" 
+                  required 
+                  class="w-full bg-transparent border-b border-neutral-800 py-4 text-sm font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-white transition-colors resize-none"
+                ></textarea>
+              </div>
+              <button 
+                type="submit" 
+                class="bg-white text-black font-mono text-xs font-bold px-8 py-4 uppercase tracking-widest hover:bg-neutral-200 transition-all hover:-translate-y-1 hover-target-solid"
+              >
+                SEND INQUIRY ↗
+              </button>
+              <div id="form-response" class="font-mono text-xs mt-2" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Footer -->
+        <div class="border-t border-neutral-800 mt-20 pt-8 flex flex-col md:flex-row justify-between gap-6 font-mono text-xs text-neutral-500 reveal">
+          <div>
+            <a href="tel:+918855811810" class="text-white hover:underline hover-target">+91 88558 11810</a>
+          </div>
+          <div class="flex gap-6">
+            <a href="https://github.com/SleepySum" target="_blank" rel="noreferrer" class="text-neutral-300 hover:text-white hover-target">GITHUB ↗</a>
+            <a href="https://www.linkedin.com/in/sumit-bhoi-b15a43330" target="_blank" rel="noreferrer" class="text-neutral-300 hover:text-white hover-target">LINKEDIN ↗</a>
+          </div>
+          <div>
+            © 2026 SUMIT BHOI. ALL RIGHTS RESERVED.
+          </div>
+        </div>
+      </section>
+
+    </main><script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+        // -------------------------------------------------------------
+        // 1. Custom Smooth Lerp Trailing Cursor Physics
+        // -------------------------------------------------------------
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorRing = document.getElementById('cursor-ring');
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let ringX = mouseX;
+        let ringY = mouseY;
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+
+          if (cursorDot) {
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+          }
+        });
+
+        function renderCursor() {
+          const lerpFactor = 0.15;
+          ringX += (mouseX - ringX) * lerpFactor;
+          ringY += (mouseY - ringY) * lerpFactor;
+
+          if (cursorRing) {
+            cursorRing.style.left = `${ringX}px`;
+            cursorRing.style.top = `${ringY}px`;
+          }
+
+          requestAnimationFrame(renderCursor);
+        }
+        renderCursor();
+
+        // Cursor hover states
+        document.querySelectorAll('.hover-target, a, button, input, textarea').forEach((target) => {
+          target.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+          target.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        document.querySelectorAll('.hover-target-solid, .circle-btn').forEach((target) => {
+          target.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover-solid'));
+          target.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover-solid'));
+        });
+
+        // -------------------------------------------------------------
+        // 2. Scroll Zoom Parallax Hero Effect
+        // -------------------------------------------------------------
+        const zoomTarget = document.getElementById('zoom-target');
+
+        window.addEventListener('scroll', () => {
+          const scrollY = window.scrollY;
+          const viewportHeight = window.innerHeight;
+
+          if (scrollY <= viewportHeight * 1.5) {
+            const progress = scrollY / (viewportHeight * 0.95);
+            const scale = 1 + Math.max(0, progress) * 3.2;
+            const opacity = Math.max(0, 1 - progress * 1.25);
+
+            if (zoomTarget) {
+              zoomTarget.style.transform = `scale(${scale})`;
+              zoomTarget.style.opacity = opacity.toString();
+            }
+          }
+        });
+
+        // -------------------------------------------------------------
+        // 3. Web Audio API Ambient Sound Synthesizer
+        // -------------------------------------------------------------
+        let audioCtx = null;
+        let isPlaying = false;
+        let masterGain = null;
+
+        const audioToggleBtn = document.getElementById('audio-toggle');
+        const audioStatusText = document.getElementById('audio-status-text');
+
+        function startAmbientSynth() {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioContext();
+
+          masterGain = audioCtx.createGain();
+          masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+          masterGain.gain.exponentialRampToValueAtTime(0.07, audioCtx.currentTime + 2.5);
+
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(320, audioCtx.currentTime);
+
+          filter.connect(masterGain);
+          masterGain.connect(audioCtx.destination);
+
+          const chordFrequencies = [110.00, 164.81, 196.00, 246.94, 261.63];
+
+          chordFrequencies.forEach((freq) => {
+            const osc = audioCtx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            const lfo = audioCtx.createOscillator();
+            lfo.frequency.setValueAtTime(0.1 + Math.random() * 0.04, audioCtx.currentTime);
+
+            const lfoGain = audioCtx.createGain();
+            lfoGain.gain.setValueAtTime(1.5, audioCtx.currentTime);
+
+            lfo.connect(lfoGain);
+            lfoGain.connect(osc.frequency);
+            lfo.start();
+
+            osc.connect(filter);
+            osc.start();
+          });
+        }
+
+        function toggleAudio() {
+          if (!audioCtx) {
+            startAmbientSynth();
+            isPlaying = true;
+            audioToggleBtn.classList.add('playing');
+            audioStatusText.textContent = 'SOUND ON';
+            return;
+          }
+
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+            isPlaying = true;
+            audioToggleBtn.classList.add('playing');
+            audioStatusText.textContent = 'SOUND ON';
+          } else if (isPlaying) {
+            audioCtx.suspend();
+            isPlaying = false;
+            audioToggleBtn.classList.remove('playing');
+            audioStatusText.textContent = 'SOUND OFF';
+          } else {
+            audioCtx.resume();
+            isPlaying = true;
+            audioToggleBtn.classList.add('playing');
+            audioStatusText.textContent = 'SOUND ON';
+          }
+        }
+
+        if (audioToggleBtn) {
+          audioToggleBtn.addEventListener('click', toggleAudio);
+        }
+
+        // -------------------------------------------------------------
+        // 4. Interactive 3D Tilt Perspective & Mouse Spotlight Tracking
+        // -------------------------------------------------------------
+        const cards = document.querySelectorAll('.project-card');
+
+        cards.forEach((card) => {
+          card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Update radial spotlight CSS variables
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            // Calculate 3D tilt angles
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -7;
+            const rotateY = ((x - centerX) / centerX) * 7;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.015, 1.015, 1.015)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          });
+        });
+
+        // -------------------------------------------------------------
+        // 5. Live Interactive Canvas Simulations inside Cards
+        // -------------------------------------------------------------
+
+        function initLaLigaCanvas() {
+          const canvas = document.getElementById('laliga-canvas');
+          if (!canvas) return;
+          const ctx = canvas.getContext('2d');
+
+          function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+          }
+          resize();
+          window.addEventListener('resize', resize);
+
+          let time = 0;
+          function draw() {
+            time += 0.02;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dark green background gradient
+            const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            bg.addColorStop(0, '#0a160f');
+            bg.addColorStop(1, '#050a07');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Tactical Pitch Lines
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.25)';
+            ctx.lineWidth = 1.5;
+
+            // Outer pitch border
+            const pad = 30;
+            ctx.strokeRect(pad, pad, canvas.width - pad * 2, canvas.height - pad * 2);
+
+            // Halfway line
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, pad);
+            ctx.lineTo(canvas.width / 2, canvas.height - pad);
+            ctx.stroke();
+
+            // Center circle
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, 45, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Animated Tactical Pass Nodes
+            const nodes = [
+              { x: canvas.width * 0.25, y: canvas.height * 0.4 },
+              { x: canvas.width * 0.45, y: canvas.height * 0.7 },
+              { x: canvas.width * 0.75, y: canvas.height * 0.35 }
+            ];
+
+            nodes.forEach((n, i) => {
+              const pulse = Math.sin(time * 3 + i) * 3;
+              ctx.fillStyle = 'rgba(52, 211, 153, 0.8)';
+              ctx.beginPath();
+              ctx.arc(n.x, n.y, 4 + pulse, 0, Math.PI * 2);
+              ctx.fill();
+            });
+
+            // Animated Pass Trajectory Arc
+            ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = 'rgba(52, 211, 153, 0.6)';
+            ctx.beginPath();
+            ctx.moveTo(nodes[0].x, nodes[0].y);
+            const controlX = canvas.width * 0.5 + Math.sin(time) * 30;
+            const controlY = canvas.height * 0.2;
+            ctx.quadraticCurveTo(controlX, controlY, nodes[2].x, nodes[2].y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            requestAnimationFrame(draw);
+          }
+          draw();
+        }
+        initLaLigaCanvas();
+
+        function initPhysxCanvas() {
+          const canvas = document.getElementById('physx-canvas');
+          if (!canvas) return;
+          const ctx = canvas.getContext('2d');
+
+          function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+          }
+          resize();
+          window.addEventListener('resize', resize);
+
+          const sun = { x: 0, y: 0, r: 12 };
+          const planets = [
+            { a: 0, dist: 65, speed: 0.025, r: 5, color: '#38bdf8' },
+            { a: 2, dist: 105, speed: 0.015, r: 7, color: '#818cf8' },
+            { a: 4, dist: 145, speed: 0.009, r: 9, color: '#c084fc' }
+          ];
+
+          function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            bg.addColorStop(0, '#060d17');
+            bg.addColorStop(1, '#020509');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            // Draw Gravitational Sun
+            ctx.fillStyle = '#fde047';
+            ctx.shadowColor = '#eab308';
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            ctx.arc(cx, cy, sun.r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // Orbiting bodies
+            planets.forEach((p) => {
+              p.a += p.speed;
+              const px = cx + Math.cos(p.a) * p.dist;
+              const py = cy + Math.sin(p.a) * (p.dist * 0.5); // Elliptical tilt
+
+              // Orbit path line
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.ellipse(cx, cy, p.dist, p.dist * 0.5, 0, 0, Math.PI * 2);
+              ctx.stroke();
+
+              // Planet body
+              ctx.fillStyle = p.color;
+              ctx.beginPath();
+              ctx.arc(px, py, p.r, 0, Math.PI * 2);
+              ctx.fill();
+            });
+
+            requestAnimationFrame(draw);
+          }
+          draw();
+        }
+        initPhysxCanvas();
+
+        function initTakrarCanvas() {
+          const canvas = document.getElementById('takrar-canvas');
+          if (!canvas) return;
+          const ctx = canvas.getContext('2d');
+
+          function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+          }
+          resize();
+          window.addEventListener('resize', resize);
+
+          let step = 0;
+          function draw() {
+            step += 0.03;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            bg.addColorStop(0, '#121214');
+            bg.addColorStop(1, '#09090b');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Flowing sine signal waves
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 3; i++) {
+              ctx.strokeStyle = i === 0 ? 'rgba(251, 191, 36, 0.6)' : 'rgba(255, 255, 255, 0.15)';
+              ctx.beginPath();
+              for (let x = 0; x < canvas.width; x += 5) {
+                const y = canvas.height / 2 + Math.sin(x * 0.02 + step + i) * (20 + i * 10);
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+              }
+              ctx.stroke();
+            }
+
+            requestAnimationFrame(draw);
+          }
+          draw();
+        }
+        initTakrarCanvas();
+
+        function initGravityCanvas() {
+          const canvas = document.getElementById('gravity-canvas');
+          if (!canvas) return;
+          const ctx = canvas.getContext('2d');
+
+          function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+          }
+          resize();
+          window.addEventListener('resize', resize);
+
+          const particles = [];
+          for (let i = 0; i < 90; i++) {
+            particles.push({
+              angle: Math.random() * Math.PI * 2,
+              radius: 20 + Math.random() * 160,
+              speed: 0.01 + Math.random() * 0.025,
+              size: 1 + Math.random() * 2.5,
+              color: i % 2 === 0 ? '#818cf8' : '#a855f7'
+            });
+          }
+
+          function draw() {
+            ctx.fillStyle = 'rgba(10, 8, 20, 0.25)'; // Motion blur trail
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+
+            particles.forEach((p) => {
+              p.angle += p.speed;
+              p.radius -= 0.15; // Pull towards center vortex
+
+              if (p.radius < 5) p.radius = 160;
+
+              const x = cx + Math.cos(p.angle) * p.radius;
+              const y = cy + Math.sin(p.angle) * p.radius;
+
+              ctx.fillStyle = p.color;
+              ctx.beginPath();
+              ctx.arc(x, y, p.size, 0, Math.PI * 2);
+              ctx.fill();
+            });
+
+            requestAnimationFrame(draw);
+          }
+          draw();
+        }
+        initGravityCanvas();
+
+        // -------------------------------------------------------------
+        // 6. Scroll Reveal Observer & Contact Form Handling
+        // -------------------------------------------------------------
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+          revealObserver.observe(el);
+        });
+
+        // Contact Form - AJAX submission via FormSubmit
+        const contactForm = document.getElementById('contact-form');
+        const formResponse = document.getElementById('form-response');
+
+        if (contactForm) {
+          contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (formResponse) {
+              formResponse.style.color = '#38bdf8';
+              formResponse.textContent = 'TRANSMITTING INQUIRY...';
+            }
+
+            const formData = new FormData(contactForm);
+            const actionUrl = contactForm.action;
+
+            fetch(actionUrl, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            })
+              .then(() => {
+                if (formResponse) {
+                  formResponse.style.color = '#4ade80';
+                  formResponse.textContent = 'INQUIRY SENT SUCCESSFULLY. THANK YOU!';
+                }
+                contactForm.reset();
+                // Reset form action after submission to prevent duplicate submissions
+                setTimeout(() => {
+                  contactForm.action = 'https://formsubmit.co/bhoisumit322s@gmail.com';
+                }, 3000);
+              })
+              .catch((err) => {
+                console.error('FormSubmit Error:', err);
+                if (formResponse) {
+                  formResponse.style.color = '#f87171';
+                  formResponse.textContent = 'FAILED TO TRANSMIT. PLEASE TRY AGAIN OR CALL DIRECTLY.';
+                }
+              });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
