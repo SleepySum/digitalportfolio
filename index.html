@@ -695,8 +695,12 @@
                 <input 
                   type="email" 
                   name="email" 
-                  placeholder="YOUR EMAIL ADDRESS" 
+                  placeholder="YOUR EMAIL ADDRESS (GMAIL ONLY)" 
                   required 
+                  pattern="[a-zA-Z0-9._%+\-]+@gmail\.com"
+                  title="Email must be a valid address ending with @gmail.com"
+                  oninvalid="this.setCustomValidity('Please enter a valid email address ending with @gmail.com')"
+                  oninput="this.setCustomValidity('')"
                   class="w-full bg-transparent border-b border-neutral-800 py-4 text-sm font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-white transition-colors"
                 />
               </div>
@@ -1172,7 +1176,21 @@
         if (contactForm) {
           contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
+            // Email filter: block submission unless the address ends with @gmail.com
+            const emailField = contactForm.querySelector('input[name="email"]');
+            const emailValue = (emailField.value || '').trim().toLowerCase();
+            const gmailPattern = /^[a-z0-9._%+-]+@gmail\.com$/;
+
+            if (!gmailPattern.test(emailValue)) {
+              if (formResponse) {
+                formResponse.style.color = '#f87171';
+                formResponse.textContent = 'PLEASE ENTER A VALID EMAIL ADDRESS ENDING WITH @GMAIL.COM';
+              }
+              emailField.focus();
+              return; // Do not send the inquiry
+            }
+
             if (formResponse) {
               formResponse.style.color = '#38bdf8';
               formResponse.textContent = 'TRANSMITTING INQUIRY...';
